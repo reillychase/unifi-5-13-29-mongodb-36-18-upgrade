@@ -1,4 +1,9 @@
-wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb
+dpkg --configure -a
+echo unifi unifi/has_backup boolean true | debconf-set-selections
+export DEBIAN_FRONTEND=noninteractive
+apt-get autoremove -y
+apt-get autoclean -y
+wget -O http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb
 dpkg -i libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb
 
 wget -qO - https://www.mongodb.org/static/pgp/server-3.4.asc | apt-key add -
@@ -8,7 +13,7 @@ apt-get install -y mongodb-org
 apt-get install -y mongodb-org=3.4.23 mongodb-org-server=3.4.23 mongodb-org-shell=3.4.23 mongodb-org-mongos=3.4.23 mongodb-org-tools=3.4.23
 
 dpkg -i --force-overwrite /var/cache/apt/archives/mongodb-org-tools_3.4.24_amd64.deb
-apt-get install -f -y
+apt-get install -f -y --allow-unauthenticated
 
 service unifi stop
 service unifi start
@@ -24,7 +29,7 @@ apt-get update -y
 apt-get install -y mongodb-org=3.6.18 mongodb-org-server=3.6.18 mongodb-org-shell=3.6.18 mongodb-org-mongos=3.6.18 mongodb-org-tools=3.6.18
 
 dpkg -i --force-overwrite /var/cache/apt/archives/mongodb-org-tools_3.6.18_amd64.deb
-apt-get install -f -y
+apt-get install -f -y --allow-unauthenticated
 
 service unifi stop
 service unifi start
